@@ -130,6 +130,25 @@ Options (via `.planning/config.json` parallelization section):
 - `skip_checkpoints`: Skip human checkpoints in background (default: true)
 - `min_plans_for_parallel`: Minimum plans to trigger parallelization (default: 2)
 
+**`/gsd:ralph-loop [phase-number]`**
+Execute plans in autonomous Ralph loop until completion.
+
+- Iterative autonomous loop inspired by Geoffrey Huntley's Ralph pattern
+- Each iteration spawns fresh execute-plan subagent with clean context
+- Persists learnings to ralph-progress.txt across iterations
+- Continues until all plans complete or max iterations reached
+- Use for "walk away" multi-plan or multi-phase execution
+
+Usage: `/gsd:ralph-loop 1` (single phase)
+Usage: `/gsd:ralph-loop` (all phases in milestone)
+
+Configuration (via `.planning/ralph-config.json`):
+- `max_iterations`: Maximum loop iterations (default: 10)
+- `auto_commit`: Auto-commit after each task (default: true)
+- `verification_level`: basic/standard/comprehensive (default: standard)
+- `scope`: Phase number or "milestone" (default: milestone)
+- `stop_on_checkpoint`: Pause loop at checkpoints (default: false)
+
 **`/gsd:status [--wait]`**
 Check status of background agents from parallel execution.
 
@@ -372,6 +391,19 @@ Change anytime by editing `.planning/config.json`
 ```
 /gsd:complete-milestone 1.0.0
 /gsd:new-project  # Start next milestone
+```
+
+**Autonomous execution with Ralph loop:**
+
+```
+# Execute single phase autonomously
+/gsd:ralph-loop 1
+
+# Execute entire milestone autonomously
+/gsd:ralph-loop
+
+# Check progress in ralph-progress.txt
+cat .planning/ralph-progress.txt
 ```
 
 **Capturing ideas during work:**

@@ -184,7 +184,13 @@ Each phase breaks into 2-3 task plans. Each plan runs in a fresh subagent contex
 /gsd:execute-plan      # Run one plan at a time with checkpoints
 ```
 
-Use `/gsd:execute-phase` for parallel "walk away" automation (recommended). Use `/gsd:execute-plan` when you need interactive single-plan execution with manual checkpoints.
+**For autonomous Ralph loop execution:**
+```
+/gsd:ralph-loop 1      # Execute phase with autonomous loop
+/gsd:ralph-loop        # Execute entire milestone with loop
+```
+
+Use `/gsd:execute-phase` for parallel "walk away" automation (recommended). Use `/gsd:execute-plan` when you need interactive single-plan execution with manual checkpoints. Use `/gsd:ralph-loop` for autonomous iterative execution with persistent learnings across iterations ([inspired by Geoffrey Huntley's Ralph pattern](https://ghuntley.com/ralph/)).
 
 ### 4. Ship and iterate
 
@@ -327,6 +333,7 @@ You're never locked in. The system adapts.
 | `/gsd:plan-phase [N]` | Generate task plans for phase |
 | `/gsd:execute-plan` | Run single plan via subagent |
 | `/gsd:execute-phase <N>` | Execute all plans in phase N with parallel agents |
+| `/gsd:ralph-loop [N]` | Execute plans in autonomous loop until complete |
 | `/gsd:status [--wait]` | Check background agent status from parallel execution |
 | `/gsd:progress` | Where am I? What's next? |
 | `/gsd:verify-work [N]` | User acceptance test of phase or plan ¹ |
